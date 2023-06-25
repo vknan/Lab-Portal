@@ -1,0 +1,45 @@
+<!-- vm_list.html -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Include necessary CSS and JS files -->
+    <!-- Example: Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>VM List</h1>
+
+        <!-- Loop through the VM objects and display the cards -->
+        {% for vm in vms %}
+        {% include 'admin_panel/vm_card.html' %}
+        {% endfor %}
+    </div>
+
+    <!-- Include necessary JS files -->
+    <!-- Example: Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Add your custom JS code for handling VM actions -->
+    <script>
+        function startVM(vmId) {
+            // Handle the logic for starting the VM with the provided ID
+        }
+
+        function stopVM(vmId) {
+            // Handle the logic for stopping the VM with the provided ID
+        }
+
+        function restartVM(vmId) {
+            // Handle the logic for restarting the VM with the provided ID
+        }
+
+        function deleteVM(vmId) {
+            // Handle the logic for deleting the VM with the provided ID
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VMs Info</title>
+</head>
+
+<body>
+    <!-- vm_card.html -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ vm.vm_id }}</h5>
+            <p class="card-text">IP: {{ vm.vm_ip }}</p>
+            <p class="card-text">Hostname: {{ vm.hostname }}</p>
+            <p class="card-text">Status: {{ vm.status }}</p>
+
+            <!-- Add buttons for various actions -->
+            <button class="btn btn-primary" onclick="startVM('{{ vm.vm_id }}')">Start</button>
+            <button class="btn btn-warning" onclick="stopVM('{{ vm.vm_id }}')">Stop</button>
+            <button class="btn btn-info" onclick="restartVM('{{ vm.vm_id }}')">Restart</button>
+            <button class="btn btn-danger" onclick="deleteVM('{{ vm.vm_id }}')">Delete</button>
+        </div>
+    </div>
+
+</body>
+
+</html>
