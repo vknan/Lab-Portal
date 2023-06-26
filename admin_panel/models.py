@@ -13,7 +13,7 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-                  
+
     def create_superuser(self, email, username, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
@@ -40,35 +40,37 @@ class Student(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
-    def _str_(self):
+    def __str__(self):
         return self.username
 
-class CustomImage(models.Model):
+class OSImage(models.Model):
     name = models.CharField(max_length=100)
-    # Other fields for the custom image
+    # Other fields for the OS image
+    image_id = models.CharField(max_length=100, null=True)
+    image_publisher = models.CharField(max_length=100, null=True)
+    image_offers = models.CharField(max_length=100, null=True)
+    image_sku = models.CharField(max_length=100, null=True)
+    aws_image_id = models.CharField(max_length=100, null=True)
+    aws_ami_id = models.CharField(max_length=100, null=True)
+    provider = models.CharField(max_length=10, choices=(('AWS', 'Amazon Web Services'), ('Azure', 'Microsoft Azure')),  default='AWS')
+
+    def __str__(self):
+        return self.name
+
+class Region(models.Model):
+    name = models.CharField(max_length=100)
+    region_name = models.CharField(max_length=100, null=True)
+    provider = models.CharField(max_length=10, choices=(('AWS', 'Amazon Web Services'), ('Azure', 'Microsoft Azure')),  default='AWS')
 
     def _str_(self):
         return self.name
 
 class VMSize(models.Model):
     name = models.CharField(max_length=100)
-    # Other fields for the VM size
+    size_id = models.CharField(max_length=100, null=True)
+    provider = models.CharField(max_length=10, choices=(('AWS', 'Amazon Web Services'), ('Azure', 'Microsoft Azure')) , default='AWS')
 
-    def _str_(self):
-        return self.name
-
-class OSType(models.Model):
-    name = models.CharField(max_length=100)
-    # Other fields for the OS type
-
-    def _str_(self):
-        return self.name
-
-class Region(models.Model):
-    name = models.CharField(max_length=100)
-    # Other fields for the region
-
-    def _str_(self):
+    def __str__(self):
         return self.name
 
 class VM(models.Model):
@@ -102,7 +104,7 @@ class VM(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     vm_id = models.CharField(max_length=100)
     configuration = models.CharField(max_length=100)
-    image = models.ForeignKey(CustomImage, on_delete=models.PROTECT)
+    os_image = models.ForeignKey(OSImage, on_delete=models.PROTECT)
     status = models.CharField(max_length=20)
     assigned_time = models.DateTimeField()
     launch_time = models.DateTimeField(null=True)
@@ -113,7 +115,7 @@ class VM(models.Model):
     vm_ip = models.CharField(max_length=100, blank=True)
     vm_password = models.CharField(max_length=100, blank=True)
     vm_size = models.ForeignKey(VMSize, on_delete=models.PROTECT)
-    os_image = models.ForeignKey(OSType, on_delete=models.PROTECT)
+    region = models.ForeignKey(Region, on_delete=models.PROTECT)
 
     # Azure specific fields
     azure_nic = models.CharField(max_length=100, blank=True)
@@ -136,7 +138,21 @@ class VM(models.Model):
     guacamole_url = models.CharField(max_length=200, blank=True)
     guacamole_username = models.CharField(max_length=50, blank=True)
     guacamole_password = models.CharField(max_length=50, blank=True)
-    region = models.ForeignKey(Region, on_delete=models.PROTECT)
 
-    def _str_(self):
+    def __str__(self):
         return self.vm_id
+
+class ErrorLog(models.Model):
+    ERROR_PROVIDERS = (
+        ('AWS', 'Amazon Web Services'),
+        ('Azure', 'Microsoft Azure'),
+    )
+
+    error_id = models.CharField(max_length=10, unique=True)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    vm = models.ForeignKey(VM, on_delete=models.CASCADE)
+    content = models.TextField(max_length=9999)
+    provider = models.CharField(max_length=10, choices=ERROR_PROVIDERS)
+
+    def __str__(self):
+        return self.error_id

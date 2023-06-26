@@ -9,3 +9,4 @@ def vm_list(request):
     }
 
     return render(request, 'admin_panel/vm_list.html', context)
+
