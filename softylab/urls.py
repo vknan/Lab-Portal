@@ -22,9 +22,7 @@ from . import views
 urlpatterns = [
     path('', include('students.urls')),
     path('admin/', admin.site.urls),
-    # path('admin_panel/', include('admin_panel.urls')),
-    path('admin_panel',views.index, name='index'),
+    path('admin_panel/', include('admin_panel.urls')),
+    
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
