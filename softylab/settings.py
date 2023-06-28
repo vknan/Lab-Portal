@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'students',
     'admin_panel',
     'rest_framework',
+    'frontend',
 ]
 
 MIDDLEWARE = [
@@ -124,6 +125,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'app/static'),
+    os.path.join(BASE_DIR, 'frontend', 'build', 'static')
+
     # Add more directories if required
 ]
 

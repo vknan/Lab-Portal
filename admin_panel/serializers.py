@@ -6,7 +6,6 @@ class StudentSerializer(serializers.ModelSerializer):
         model = Student
         fields = '__all__'
 
-
 class VMSizeSerializer(serializers.ModelSerializer):
     class Meta:
         model = VMSize

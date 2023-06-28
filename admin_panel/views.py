@@ -1,8 +1,12 @@
 from django.shortcuts import render
-from .models import VM
+
 from rest_framework import generics
 from .models import Student, VMSize, OSImage, Region, VM, ErrorLog
 from .serializers import StudentSerializer, VMSizeSerializer, VMSerializer, ErrorLogSerializer, RegionSerializer, OSImageSerializer
+
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 
 # def vm_list(request):
@@ -19,6 +23,25 @@ from .serializers import StudentSerializer, VMSizeSerializer, VMSerializer, Erro
 class StudentListAPIView(generics.ListAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+@api_view(['POST'])
+def create_student(request):
+    if request.method == 'POST':
+        serializer = StudentSerializer(data=request.data)
+        if serializer.is_valid():
+            student = serializer.save()
+            # Process the deserialized student object
+            return Response({'success': True, 'message': 'Student created successfully'})
+        else:
+            errors = serializer.errors
+            # Handle validation errors
+            return Response(errors, status=400)
+
+
+
 class VMSizeListAPIView(generics.ListAPIView):
     queryset = VMSize.objects.all()
     serializer_class = VMSizeSerializer
