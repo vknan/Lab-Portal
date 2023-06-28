@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'students',
     'admin_panel',
     'rest_framework',
-    'frontend',
+    'reactapp',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +58,7 @@ ROOT_URLCONF = 'softylab.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'reactapp/build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,9 +124,7 @@ STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'app/static'),
-    os.path.join(BASE_DIR, 'frontend', 'build', 'static')
-
+    os.path.join(BASE_DIR, 'reactapp/build/static'),
     # Add more directories if required
 ]
 
@@ -134,9 +132,6 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-
 
 #new added
 AUTHENTICATION_BACKENDS = [

@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('students.urls')),
     path('admin/', admin.site.urls),
     path('admin_panel/', include('admin_panel.urls')),   
+    path('index/', views.index, name='index'),
 ]
 
 if settings.DEBUG:
