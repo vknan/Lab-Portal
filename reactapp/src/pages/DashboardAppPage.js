@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import { HelmetProvider } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
 // @mui
 import { useTheme } from '@mui/material/styles';
@@ -25,9 +25,9 @@ export default function DashboardAppPage() {
 
   return (
     <>
-      <Helmet>
+      <HelmetProvider>
         <title> Dashboard | Minimal UI </title>
-      </Helmet>
+      </HelmetProvider>
 
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
