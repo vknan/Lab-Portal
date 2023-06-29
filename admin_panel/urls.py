@@ -1,5 +1,5 @@
 from django.urls import path, include 
-from .views import create_student
+from .views import create_student, login_view
 from .views import StudentListAPIView, OSImageListAPIView, VMListAPIView, VMSizeListAPIView, RegionListAPIView, ErrorlogListAPIView
 urlpatterns = [
    path('studentapi/', StudentListAPIView.as_view(), name='Student-list'),
@@ -9,5 +9,6 @@ urlpatterns = [
    path('Regionapi/', RegionListAPIView.as_view(), name='Region-list'),
    path('Errorlogapi/', ErrorlogListAPIView.as_view(), name='Errorlog-list'),
    path('students/create/', create_student, name='create_student'),
+   path('login/', login_view, name='login'),
 ]
 
