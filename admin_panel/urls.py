@@ -1,6 +1,6 @@
 from django.urls import path, include 
-from .views import create_student, login_view
-from .views import StudentListAPIView, OSImageListAPIView, VMListAPIView, VMSizeListAPIView, RegionListAPIView, ErrorlogListAPIView
+from .views import *
+# from .views import StudentListAPIView, OSImageListAPIView, VMListAPIView, VMSizeListAPIView, RegionListAPIView, ErrorlogListAPIView
 urlpatterns = [
    path('studentapi/', StudentListAPIView.as_view(), name='Student-list'),
    path('OSImageapi/', OSImageListAPIView.as_view(), name='OSImage-list'),
@@ -10,5 +10,6 @@ urlpatterns = [
    path('Errorlogapi/', ErrorlogListAPIView.as_view(), name='Errorlog-list'),
    path('students/create/', create_student, name='create_student'),
    path('login/', login_view, name='login'),
+   path('logout/', logout_view, name='logout'),
 ]
 
