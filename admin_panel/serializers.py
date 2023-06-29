@@ -30,3 +30,12 @@ class ErrorLogSerializer(serializers.ModelSerializer):
     class Meta:
         model = ErrorLog
         fields = '__all__'
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField(max_length=150)
+    password = serializers.CharField(max_length=128)
+
+    def validate(self, attrs):
+        # Perform any additional validation you need
+        # You can also authenticate the user here if required
+        return attrs

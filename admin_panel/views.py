@@ -2,12 +2,11 @@ from django.shortcuts import render
 
 from rest_framework import generics
 from .models import Student, VMSize, OSImage, Region, VM, ErrorLog
-from .serializers import StudentSerializer, VMSizeSerializer, VMSerializer, ErrorLogSerializer, RegionSerializer, OSImageSerializer
-
-
+from .serializers import *
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
+from django.http import JsonResponse
+from django.contrib.auth import authenticate, login, logout
 
 # def vm_list(request):
 #     vms = VM.objects.all()  # Assuming you have retrieved the VM objects
@@ -24,8 +23,7 @@ class StudentListAPIView(generics.ListAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+
 
 @api_view(['POST'])
 def create_student(request):
@@ -39,6 +37,29 @@ def create_student(request):
             errors = serializer.errors
             # Handle validation errors
             return Response(errors, status=400)
+
+
+@api_view(['POST'])
+def login_view(request):
+    if request.method == 'POST':
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            username = serializer.validated_data.get('username')
+            password = serializer.validated_data.get('password')
+
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                return JsonResponse({'message': 'Login successful'})
+        
+        return JsonResponse({'error': 'Invalid credentials'})
+
+
+@api_view(['POST'])
+def logout_view(request):
+    logout(request)
+    return JsonResponse({'message': 'Logout successful'})
 
 
 
