@@ -39,8 +39,7 @@ def create_student(request):
             return Response(errors, status=400)
 
 
-
-
+@api_view(['POST'])
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -52,11 +51,11 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return JsonResponse({'message': 'Login successful'})
+            return Response({'message': 'Login successful'})
         else:
-            return JsonResponse({'message': 'Invalid credentials'}, status=401)
+            return Response({'message': 'Invalid credentials'}, status=401)
 
-    return JsonResponse({'message': 'Invalid request method'}, status=400)
+    return Response({'message': 'Invalid request method'}, status=400)
 
 
 @api_view(['POST'])
