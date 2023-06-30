@@ -12,32 +12,29 @@ export default function LoginForm() {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [loginData, setLoginData] = useState({});
 
   const handleClick = () => {
     navigate('/dashboard', { replace: true });
   };
-  const [useremail, setUseremail] = useState('');
-  const [password, setPassword] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleOnChange = (e) => {
+    const field = e.target.name;
+    const value = e.target.value;
+    const newLoginData = { ...loginData };
+    newLoginData[field] = value;
+    setLoginData(newLoginData);
   };
 
   return (
-    <div onSubmit={handleSubmit}>
+    <div>
       <Stack spacing={3}>
-        <TextField
-          value={useremail}
-          onChange={(e) => setUseremail(e.target.value)}
-          name="email"
-          label="Email address"
-        />
+        <TextField onBlur={handleOnChange} name="email" label="Email address" />
 
         <TextField
           name="password"
           label="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onBlur={handleOnChange}
           type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
@@ -50,7 +47,6 @@ export default function LoginForm() {
           }}
         />
       </Stack>
-
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
         <Checkbox name="remember" label="Remember me" />
         <Link variant="subtitle2" underline="hover">
@@ -58,7 +54,7 @@ export default function LoginForm() {
         </Link>
       </Stack>
 
-      <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleClick}>
+      <LoadingButton fullWidth size="large" type="submit" variant="contained">
         Login
       </LoadingButton>
     </div>
