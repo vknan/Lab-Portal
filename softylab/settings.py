@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-be)h*kcakz7rzodf393tr&k(flmr*h0t!-%obyuetn9=%u50%r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['vijaykrishna.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition
@@ -138,4 +138,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTHENTICATION_BACKENDS = [
     'students.authentication.CustomModelBackend',
     'django.contrib.auth.backends.ModelBackend',
+    
 ]

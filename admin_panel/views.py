@@ -39,21 +39,24 @@ def create_student(request):
             return Response(errors, status=400)
 
 
-@api_view(['POST'])
+
+
 def login_view(request):
     if request.method == 'POST':
-        serializer = LoginSerializer(data=request.data)
-        if serializer.is_valid():
-            username = serializer.validated_data.get('username')
-            password = serializer.validated_data.get('password')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        print(username, password)
+        if not username or not password:
+            return Response({'message': 'Missing username or password'}, status=400)
 
-            user = authenticate(request, username=username, password=password)
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return JsonResponse({'message': 'Login successful'})
+        else:
+            return JsonResponse({'message': 'Invalid credentials'}, status=401)
 
-            if user is not None:
-                login(request, user)
-                return JsonResponse({'message': 'Login successful'})
-        
-        return JsonResponse({'error': 'Invalid credentials'})
+    return JsonResponse({'message': 'Invalid request method'}, status=400)
 
 
 @api_view(['POST'])
