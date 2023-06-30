@@ -20,10 +20,6 @@
       "react-app",
       "airbnb-base",
       "plugin:vue/essential"
-    ],
-    "plugins": [
-      "@babel/plugin-proposal-class-properties",
-      "@babel/plugin-proposal-optional-chaining"
     ]
   },
   "babel": {
