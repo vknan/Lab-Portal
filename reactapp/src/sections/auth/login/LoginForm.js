@@ -37,7 +37,7 @@ export default function LoginForm() {
           name="password"
           label="Password"
           value={password}
-          onChange={(e = setPassword(e.target.value))}
+          onChange={(e) => setPassword(e.target.value)}
           type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
