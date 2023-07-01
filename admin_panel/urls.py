@@ -9,7 +9,6 @@ urlpatterns = [
    path('Regionapi/', RegionListAPIView.as_view(), name='Region-list'),
    path('Errorlogapi/', ErrorlogListAPIView.as_view(), name='Errorlog-list'),
    path('students/create/', create_student, name='create_student'),
-   path('login/', login_view, name='login'),
    path('logout/', logout_view, name='logout'),
 ]
 

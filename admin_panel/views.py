@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework import status
 from rest_framework import generics
 from .models import Student, VMSize, OSImage, Region, VM, ErrorLog
@@ -43,28 +43,6 @@ def create_student(request):
 
 
 
-@api_view(['POST'])
-def login_view(request):
-    serializer = LoginSerializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
-
-    # Access the validated username and password
-    username = serializer.validated_data['username']
-    password = serializer.validated_data['password']
-
-    # Authenticate the user
-    user = authenticate(request, username=username, password=password)
-
-    if user is not None:
-        # Check if the user is a student
-        if isinstance(user, Student):
-            # Login the authenticated user
-            login(request, user)
-            return Response({"message": "Login successful"})
-        else:
-            return Response({"message": "Invalid username or password"}, status=status.HTTP_400_BAD_REQUEST)
-    else:
-        return Response({"message": "Invalid username or password"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 

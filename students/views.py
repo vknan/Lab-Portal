@@ -25,6 +25,27 @@ def index1(request):
     return render(request, 'login.html', {'error_message': error_message})
 
 
+def student_login(request):
+    if request.method == 'POST':
+        serializer = LoginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        # Access the validated username and password
+        username = serializer.validated_data['username']
+        password = serializer.validated_data['password']
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            # Redirect to the appropriate URL after successful login
+            return redirect('dashboard/app')  # Replace 'student_dashboard' with the actual URL name of the student dashboard page
+        else:
+            # Add an error message to be displayed on the login page
+            error_message = 'Invalid username or password'
+
+    # Render the login page with the error message (if any)
+    return render(request, 'index.html')
+
 @login_required
 def dashboard1(request):
     if request.user.is_staff or request.user.is_superuser:
