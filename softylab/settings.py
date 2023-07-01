@@ -138,5 +138,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTHENTICATION_BACKENDS = [
     'students.authentication.CustomModelBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'admin_panel.cust_auth.CustomAuthBackend',
     
 ]

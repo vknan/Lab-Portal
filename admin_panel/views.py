@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from rest_framework import status
 from rest_framework import generics
 from .models import Student, VMSize, OSImage, Region, VM, ErrorLog
 from .serializers import *
@@ -7,6 +7,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
+
+
 
 # def vm_list(request):
 #     vms = VM.objects.all()  # Assuming you have retrieved the VM objects
@@ -39,23 +41,29 @@ def create_student(request):
             return Response(errors, status=400)
 
 
+
 @api_view(['POST'])
 def login_view(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        print(username, password)
-        if not username or not password:
-            return Response({'message': 'Missing username or password'}, status=400)
+    serializer = LoginSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
 
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
+    # Access the validated username and password
+    username = serializer.validated_data['username']
+    password = serializer.validated_data['password']
+
+    # Authenticate the user
+    user = authenticate(request, username=username, password=password)
+
+    if user is not None:
+        # Check if the user is a student
+        if isinstance(user, Student):
+            # Login the authenticated user
             login(request, user)
-            return Response({'message': 'Login successful'})
+            return Response({"message": "Login successful"})
         else:
-            return Response({'message': 'Invalid credentials'}, status=401)
-
-    return Response({'message': 'Invalid request method'}, status=400)
+            return Response({"message": "Invalid username or password"}, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response({"message": "Invalid username or password"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
