@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from .models import Student, VMSize, OSImage, Region, VM, ErrorLog
+from .models import *
+from django.contrib.auth.models import User
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
