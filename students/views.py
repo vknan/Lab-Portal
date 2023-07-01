@@ -3,7 +3,8 @@ from django.shortcuts import redirect, render, HttpResponse
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-
+from rest_framework.decorators import api_view
+from admin_panel.serializers import *
 # Create your views here.
 
 def index1(request):
@@ -34,6 +35,7 @@ def student_login(request):
         username = serializer.validated_data['username']
         password = serializer.validated_data['password']
 
+        print(username, password)
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
