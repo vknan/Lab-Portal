@@ -42,6 +42,7 @@ def create_student(request):
 
 
 
+
 @api_view(['POST'])
 def login_view(request):
     serializer = LoginSerializer(data=request.data)
@@ -64,6 +65,8 @@ def login_view(request):
             return Response({"message": "Invalid username or password"}, status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response({"message": "Invalid username or password"}, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 
 @api_view(['POST'])
