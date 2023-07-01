@@ -1,4 +1,4 @@
-import { HelmetProvider } from 'react-helmet-async';
+import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
 // @mui
 import { useTheme } from '@mui/material/styles';
@@ -25,9 +25,9 @@ export default function DashboardAppPage() {
 
   return (
     <>
-      <HelmetProvider>
+      <Helmet>
         <title> Dashboard | Minimal UI </title>
-      </HelmetProvider>
+      </Helmet>
 
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
@@ -148,7 +148,7 @@ export default function DashboardAppPage() {
                 id: faker.datatype.uuid(),
                 title: faker.name.jobTitle(),
                 description: faker.name.jobTitle(),
-                image: `/static/assets/images/covers/cover_${index + 1}.jpg`,
+                image: `/assets/images/covers/cover_${index + 1}.jpg`,
                 postedAt: faker.date.recent(),
               }))}
             />
